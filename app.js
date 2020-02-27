@@ -1,67 +1,74 @@
-const cafeList = document.querySelector('#cafe-list');
-const form = document.querySelector('#add-cafe-form');
+const todoList = document.querySelector('#to-do-list');
+const form = document.querySelector('#add-task');
 
 // create element & render cafe
-function renderCafe(doc){
-    let li = document.createElement('li');
-    let name = document.createElement('span');
-    let city = document.createElement('span');
-    let cross = document.createElement('div');
+function renderList(doc) {
+  let li = document.createElement('li');
+  let task = document.createElement('span');
+  // let city = document.createElement('span');
+  let cross = document.createElement('div');
 
-    li.setAttribute('data-id', doc.id);
-    name.textContent = doc.data().name;
-    city.textContent = doc.data().city;
-    cross.textContent = 'x';
+  li.setAttribute('data-id', doc.id);
+  task.textContent = doc.data().task;
+  //city.textContent = doc.data().city;
+  cross.textContent = 'x';
 
-    li.appendChild(name);
-    li.appendChild(city);
-    li.appendChild(cross);
+  li.appendChild(task);
+  //li.appendChild(city);
+  li.appendChild(cross);
 
-    cafeList.appendChild(li);
+  todoList.appendChild(li);
 
-    // deleting data
-    cross.addEventListener('click', (e) => {
-        e.stopPropagation();
-        let id = e.target.parentElement.getAttribute('data-id');
-        db.collection('cafes').doc(id).delete();
-    });
+  // deleting data
+  cross.addEventListener('click', e => {
+    e.stopPropagation();
+    let id = e.target.parentElement.getAttribute('data-id');
+    db.collection('list')
+      .doc(id)
+      .delete();
+  });
 }
 
-// getting data
-// db.collection('cafes').orderBy('city').get().then(snapshot => {
+//getting data
+// db.collection('list')
+//   .orderBy('task')
+//   .get()
+//   .then(snapshot => {
 //     snapshot.docs.forEach(doc => {
-//         renderCafe(doc);
+//       renderList(doc);
 //     });
-// });
+//   });
 
 // saving data
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    db.collection('cafes').add({
-        name: form.name.value,
-        city: form.city.value
-    });
-    form.name.value = '';
-    form.city.value = '';
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  db.collection('list').add({
+    task: form.task.value
+    // city: form.city.value
+  });
+  form.task.value = '';
+  //form.city.value = "";
 });
 
 // real-time listener
-db.collection('cafes').orderBy('city').onSnapshot(snapshot => {
+db.collection('list')
+  .orderBy('task')
+  .onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
     changes.forEach(change => {
-        console.log(change.doc.data());
-        if(change.type == 'added'){
-            renderCafe(change.doc);
-        } else if (change.type == 'removed'){
-            let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
-            cafeList.removeChild(li);
-        }
+      console.log(change.doc.data());
+      if (change.type == 'added') {
+        renderList(change.doc);
+      } else if (change.type == 'removed') {
+        let li = todoList.querySelector('[data-id=' + change.doc.id + ']');
+        todoList.removeChild(li);
+      }
     });
-});
+  });
 
 // updating records (console demo)
 // db.collection('cafes').doc('DOgwUvtEQbjZohQNIeMr').update({
-//     name: 'mario world'
+//     task: 'mario world'
 // });
 
 // db.collection('cafes').doc('DOgwUvtEQbjZohQNIeMr').update({

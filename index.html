@@ -1,39 +1,51 @@
 <html>
-    <head>
-        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+  <head>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script> -->
 
-        <h1>Cloud Cafe</h1>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
 
-        <div class="content">
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
 
-            <form id="add-cafe-form">
-                <input type="text" name="name" placeholder="Cafe name">
-                <input type="text" name="city" placeholder="Cafe city">
-                <button>Add Cafe</button>
-            </form>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Surya's To-Do List</h1>
 
-            <ul id="cafe-list"></ul>
+    <div class="content">
+      <form id="add-task">
+        <input
+          type="text"
+          name="task"
+          placeholder="Write your task here"
+          required
+        />
+        <button>Add task</button>
+      </form>
 
-        </div>
+      <ul id="to-do-list"></ul>
+    </div>
 
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyBrItE-kYM4dU0kaft7WYjb3749lCv42uA",
-                authDomain: "ninja-firestore.firebaseapp.com",
-                databaseURL: "https://ninja-firestore.firebaseio.com",
-                projectId: "ninja-firestore",
-                storageBucket: "ninja-firestore.appspot.com",
-                messagingSenderId: "176079657618"
-            };
-            firebase.initializeApp(config);
-            const db = firebase.firestore();
-            db.settings({ timestampsInSnapshots: true }); 
-        </script>
-        <script src="app.js"></script>
-    </body>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: 'AIzaSyCeeD74BpFEKF72Aq6X4g90fna46A32AYE',
+        authDomain: 'to-do-list-21ef0.firebaseapp.com',
+        databaseURL: 'https://to-do-list-21ef0.firebaseio.com',
+        projectId: 'to-do-list-21ef0',
+        storageBucket: 'to-do-list-21ef0.appspot.com',
+        messagingSenderId: '118676206298',
+        appId: '1:118676206298:web:4704ece0ce5189d449ebe3',
+        measurementId: 'G-ME5NNR45FM'
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      firebase.analytics();
+    </script>
+    <script src="app.js"></script>
+  </body>
 </html>
