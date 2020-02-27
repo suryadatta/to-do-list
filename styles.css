@@ -1,7 +1,14 @@
 body {
   font-family: ubuntu;
-  background-image: url('images/header-bg.jpg');
-  background-repeat: repeat-y;
+  /* background-image: url('images/header-bg.jpg');
+  background-repeat: repeat-y; */
+  background: rgb(155, 219, 213);
+  background: radial-gradient(
+    circle,
+    rgba(155, 219, 213, 1) 0%,
+    rgba(28, 188, 173, 1) 65%,
+    rgba(88, 217, 244, 1) 100%
+  );
 }
 
 h1 {
