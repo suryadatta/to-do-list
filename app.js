@@ -1,20 +1,17 @@
 const todoList = document.querySelector('#to-do-list');
 const form = document.querySelector('#add-task');
 
-// create element & render cafe
+// create element & render list
 function renderList(doc) {
   let li = document.createElement('li');
   let task = document.createElement('span');
-  // let city = document.createElement('span');
   let cross = document.createElement('div');
 
   li.setAttribute('data-id', doc.id);
   task.textContent = doc.data().task;
-  //city.textContent = doc.data().city;
   cross.textContent = 'x';
 
   li.appendChild(task);
-  //li.appendChild(city);
   li.appendChild(cross);
 
   todoList.appendChild(li);
@@ -43,16 +40,15 @@ function renderList(doc) {
 form.addEventListener('submit', e => {
   e.preventDefault();
   db.collection('list').add({
-    task: form.task.value
-    // city: form.city.value
+    task: form.task.value,
+    time: new Date()
   });
   form.task.value = '';
-  //form.city.value = "";
 });
 
 // real-time listener
 db.collection('list')
-  .orderBy('task')
+  .orderBy('time')
   .onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
     changes.forEach(change => {
